@@ -1,10 +1,14 @@
 import React from "react";
+import Navbar from "../layout/Navbar";
 
-const NotFound:React.FC<{}> = (props) => {
+const NotFound: React.FC<{}> = (props) => {
     return (
-        <div>
-            <h1>Not Found</h1>
-        </div>
+        <>
+            <Navbar/>
+            <div>
+                <h1>Not Found</h1>
+            </div>
+        </>
     )
 }
 

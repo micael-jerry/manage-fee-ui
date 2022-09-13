@@ -1,11 +1,15 @@
 import React from "react";
+import Navbar from "../layout/Navbar";
 
 const Fee:React.FC<{}> = (props) => {
 
     return (
-        <div className={"container"}>
-            <h1>Fee page</h1>
-        </div>
+        <>
+            <Navbar/>
+            <div className={"container"}>
+                <h1>Fee page</h1>
+            </div>
+        </>
     )
 }
 

@@ -9,7 +9,7 @@ export type StudentType = {
     phone: string | null,
     email: string | null,
     entranceDate: string,
-    group: GroupType,
+    groups: GroupType,
     username: string | null,
     password: string | null
     role: string
@@ -19,6 +19,22 @@ export type GroupType = {
     id: number,
     name: string,
     description: string | null
+}
+
+export type FeeType = {
+    id: number,
+    type: string,
+    description: string | null,
+    totalAmount: number,
+    remainingAmount: null,
+    student: StudentType,
+    schoolYear: SchoolYearType
+}
+
+export type SchoolYearType = {
+    id: number,
+    startYear: string,
+    endYear: string
 }
 
 

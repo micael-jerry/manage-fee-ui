@@ -34,8 +34,8 @@ const Student: React.FC<{}> = (props) => {
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <div className="btn-group me-2">
                         <button type="button" className="btn btn-sm btn-outline-secondary">ADD NEW STUDENT</button>
-                        <select disabled={true} name={"sortByLastName"} id={"sortByLastName"} className="btn btn-sm btn-outline-secondary">
-                            <option selected={true}>Sort by lastname</option>
+                        <select  name={"sortByLastName"} id={"sortByLastName"} className="btn btn-sm btn-outline-secondary">
+                            <option value={undefined} selected={true}>Sort by lastname</option>
                             <option value={"asc"}>asc</option>
                             <option value={"desc"}>desc</option>
                         </select>
@@ -61,13 +61,13 @@ const Student: React.FC<{}> = (props) => {
                     </thead>
                     <tbody>
                     {
-                        (users || []).map((user: any) => {
+                        (users || []).map((user: StudentType) => {
                             return (
                                 <tr key={user.id}>
                                     <td>{user.ref}</td>
                                     <td>{user.lastname}</td>
                                     <td>{user.firstname}</td>
-                                    <td>{user.groups.name}</td>
+                                    <td>{user.groups == null ? "" : user.groups.name}</td>
                                     <td>{user.entranceDate}</td>
                                 </tr>
                             )

@@ -45,7 +45,7 @@ const Student: React.FC<{}> = (props) => {
 
             <h2>Section title</h2>
             <div className="table-responsive">
-                <table className="table table-striped table-sm">
+                <table id={"table"} className="table table-striped table-sm">
                     <thead>
                     <tr>
                         <th scope="col">Ref</th>
@@ -59,7 +59,7 @@ const Student: React.FC<{}> = (props) => {
                     {
                         (users || []).map((user: any) => {
                             return (
-                                <tr key={user.ref}>
+                                <tr key={user.id}>
                                     <td>{user.ref}</td>
                                     <td>{user.lastname}</td>
                                     <td>{user.firstname}</td>

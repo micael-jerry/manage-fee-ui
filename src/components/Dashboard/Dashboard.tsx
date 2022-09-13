@@ -1,12 +1,14 @@
 import React from "react";
 import './dashboard.css'
-import Navbar from "../../layout/Navbar";
+import Navbar from "../layout/Navbar";
 import Content from "./Content";
 import {Route, Routes} from "react-router-dom";
-import Student from "../Student";
-import Home from "../Home";
-import NotFound from "../NotFound";
-import SideBar from "../../layout/SideBar";
+import Student from "../pages/Student";
+import Home from "../pages/Home";
+import NotFound from "../pages/NotFound";
+import SideBar from "../layout/SideBar";
+import Fee from "../pages/Fee";
+import Transaction from "../pages/Transaction";
 
 const Dashboard: React.FC<{}> = (props) => {
 
@@ -19,8 +21,10 @@ const Dashboard: React.FC<{}> = (props) => {
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <Routes>
                         <Route path={"/"} element={<Home/>}></Route>
-                        <Route path={"/fee"} element={<Content/>}></Route>
-                        <Route path={"/student"} element={<Student/>}></Route>
+                        <Route path={"/fees"} element={<Fee/>}></Route>
+                        <Route path={"/students"} element={<Student/>}></Route>
+                        <Route path={"/transaction"} element={<Transaction/>}></Route>
+                        <Route path={"/content"} element={<Content/>}></Route>
                         <Route path={"*"} element={<NotFound/>}></Route>
                     </Routes>
                 </main>

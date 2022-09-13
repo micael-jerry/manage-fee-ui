@@ -20,3 +20,9 @@ export type GroupType = {
     name: string,
     description: string | null
 }
+
+
+export type BasicAuth = {
+    username: string | null,
+    password: string | null
+}

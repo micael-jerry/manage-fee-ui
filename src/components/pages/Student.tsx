@@ -17,12 +17,12 @@ const Student: React.FC<{}> = (props) => {
     }, []);
 
     const searchByLastname = async (lastname: string) => {
-        await axios.get(BASE_URL + "/users?lastname=" + lastname)
+        await axios.get(BASE_URL + "/users/role/student?lastname=" + lastname)
             .then((res: any) => {
                 setUsers(res.data);
             }).catch((err) => {
                 console.log(err);
-            })
+            });
     }
 
     return (
@@ -33,17 +33,21 @@ const Student: React.FC<{}> = (props) => {
                 <h1 className="h2">Dashboard</h1>
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <div className="btn-group me-2">
-                        <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
-                        <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
+                        <button type="button" className="btn btn-sm btn-outline-secondary">ADD NEW STUDENT</button>
+                        <select disabled={true} name={"sortByLastName"} id={"sortByLastName"} className="btn btn-sm btn-outline-secondary">
+                            <option selected={true}>Sort by lastname</option>
+                            <option value={"asc"}>asc</option>
+                            <option value={"desc"}>desc</option>
+                        </select>
                     </div>
-                    <button type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle">
+                    <button disabled={true} type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle">
                         <span data-feather="calendar"></span>
                         This week
                     </button>
                 </div>
             </div>
 
-            <h2>Section title</h2>
+            <h2>Student List</h2>
             <div className="table-responsive">
                 <table id={"table"} className="table table-striped table-sm">
                     <thead>

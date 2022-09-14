@@ -26,9 +26,9 @@ export type FeeType = {
     type: string,
     description: string | null,
     totalAmount: number,
-    remainingAmount: null,
-    student: StudentType,
-    schoolYear: SchoolYearType
+    remainingAmount: number,
+    student: StudentType | null,
+    schoolYear: SchoolYearType | null
 }
 
 export type SchoolYearType = {

@@ -23,8 +23,11 @@ const Dashboard: React.FC<{
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <Routes>
                         <Route path={"/"} element={<Home/>}></Route>
-                        <Route path={"/fees"} element={<Fee/>}></Route>
-                        <Route path={"/students"} element={<Student toggleModal={toggleModal} setModalValue={setModalValue} setRequest={setRequest}/>}></Route>
+                        <Route path={"/fees"} element={<Fee toggleModal={toggleModal} setModalValue={setModalValue}
+                                                            setRequest={setRequest}/>}></Route>
+                        <Route path={"/students"}
+                               element={<Student toggleModal={toggleModal} setModalValue={setModalValue}
+                                                 setRequest={setRequest}/>}></Route>
                         <Route path={"/transaction"} element={<Transaction/>}></Route>
                         <Route path={"/content"} element={<Content/>}></Route>
                         <Route path={"*"} element={<NotFound/>}></Route>

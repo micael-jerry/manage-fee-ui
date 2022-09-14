@@ -4,7 +4,12 @@ import axios from "axios";
 import {BASE_URL} from "../../properties";
 import {FeeType} from "../../types";
 
-const Fee: React.FC<{}> = (props) => {
+const Fee: React.FC<{
+    toggleModal: (modal: string) => void,
+    setModalValue: (value: any) => void,
+    setRequest: (value: string | null) => void
+}> = (props) => {
+    const {toggleModal, setModalValue, setRequest} = props;
     const [fees, setFees] = useState<FeeType[] | null>(null);
 
     useEffect(() => {
@@ -17,6 +22,16 @@ const Fee: React.FC<{}> = (props) => {
         })
     }, []);
 
+    const getModalValue = async (id: number | string) => {
+        await axios.get(BASE_URL + "/fees/" + id)
+            .then((res: any) => {
+                setModalValue(res.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+        await toggleModal("feeModal");
+    }
+
     return (
         <>
             <Navbar/>
@@ -25,7 +40,11 @@ const Fee: React.FC<{}> = (props) => {
                 <h1 className="h2">Dashboard</h1>
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <div className="btn-group me-2">
-                        <button type="button" className="btn btn-sm btn-outline-secondary">ADD NEW STUDENT</button>
+                        <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => {
+                            setRequest("add");
+                            toggleModal("feeModal");
+                        }}>ADD NEW FEE
+                        </button>
                         <select name={"sortByLastName"} id={"sortByLastName"}
                                 className="btn btn-sm btn-outline-secondary">
                             <option value={undefined} selected={true}>Sort by lastname</option>
@@ -57,13 +76,20 @@ const Fee: React.FC<{}> = (props) => {
                     {
                         (fees || []).map((fee: FeeType) => {
                             return (
-                                <tr key={fee.id}>
-                                    <td>{fee.student.id}</td>
-                                    <td>{fee.student.lastname}</td>
+                                <tr key={fee.id} onClick={() => {
+                                    getModalValue(fee.id == null ? 0 : fee.id);
+                                    setRequest("update");
+                                }}>
+                                    <td>{fee.student == null ? "" : fee.student.id}</td>
+                                    <td>{fee.student == null ? "" : fee.student.lastname}</td>
                                     <td>{fee.type}</td>
                                     <td>{fee.remainingAmount}</td>
                                     <td>{fee.totalAmount}</td>
-                                    <td>{fee.schoolYear.startYear + "-" + fee.schoolYear.endYear}</td>
+                                    <td>{
+                                        (fee.schoolYear == null ? "" : fee.schoolYear.startYear)
+                                        + "-" +
+                                        (fee.schoolYear == null ? "" : fee.schoolYear.endYear)
+                                    }</td>
                                 </tr>
                             )
                         })

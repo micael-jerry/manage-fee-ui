@@ -24,11 +24,6 @@ const SideBar: React.FC<{}> = (props) => {
                             Students
                         </Link>
                     </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to={"/content"}>
-                            Content
-                        </Link>
-                    </li>
                 </ul>
 
                 <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">

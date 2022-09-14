@@ -1,7 +1,5 @@
 import React from "react";
 import './dashboard.css'
-import Navbar from "../layout/Navbar";
-import Content from "./Content";
 import {Route, Routes} from "react-router-dom";
 import Student from "../pages/Student";
 import Home from "../pages/Home";
@@ -29,7 +27,6 @@ const Dashboard: React.FC<{
                                element={<Student toggleModal={toggleModal} setModalValue={setModalValue}
                                                  setRequest={setRequest}/>}></Route>
                         <Route path={"/transaction"} element={<Transaction/>}></Route>
-                        <Route path={"/content"} element={<Content/>}></Route>
                         <Route path={"*"} element={<NotFound/>}></Route>
                     </Routes>
                 </main>

@@ -12,8 +12,6 @@ const FeeModal: React.FC<{
     const [value, setValue] = useState<FeeType>();
     const [studentsList, setStudentList] = useState<StudentType[]>();
     const [selectSchoolYear, setSelectSchoolYear] = useState<SchoolYearType[]>();
-    const [studentSelected, setStudentSelected] = useState<StudentType>();
-    const [schoolYearSelected, setSchoolYearSelected] = useState<SchoolYearType>();
 
     useEffect(() => {
         getAllStudent();
@@ -95,16 +93,19 @@ const FeeModal: React.FC<{
             });
         } else if (key === "student") {
             setValue((state: any) => {
-                console.log(getStudent(studentSelected!.id == null ? 0 : studentSelected!.id))
-                return {...state, "student": studentSelected}
+                return {
+                    ...state, "student": {
+                        "id": event.target.value
+                    }
+                }
             })
         } else if (key === "schoolYear") {
-            await setSchoolYearSelected({
-                id: event.target.value,
-                endYear: "", startYear: ""
-            })
-            await setValue((state: any) => {
-                return {...state, "schoolYear": schoolYearSelected}
+            setValue((state: any) => {
+                return {
+                    ...state, "schoolYear": {
+                        "id": event.target.value
+                    }
+                }
             })
         }
     }
@@ -144,30 +145,31 @@ const FeeModal: React.FC<{
                             }
                         </select>
                     </div>
-                    <select name={"schoolYear"} id={"schoolYear"}
-                            onChange={inputChangeValue}
-                            className="btn btn-sm btn-outline-secondary">
-                        <option
-                            value={value ? (value!.schoolYear == null ? undefined : value!.schoolYear.id == null ? undefined : value!.schoolYear.id) : undefined}
-                            selected={true}>
+                    <div className={"mt-3"}>
+                        <select name={"schoolYear"} id={"schoolYear"}
+                                onChange={inputChangeValue}
+                                className="btn btn-sm btn-outline-secondary">
+                            <option
+                                value={value ? (value!.schoolYear == null ? undefined : value!.schoolYear.id == null ? undefined : value!.schoolYear.id) : undefined}
+                                selected={true}>
+                                {
+                                    value ?
+                                        (value!.schoolYear == null ? "select school year" : value!.schoolYear.startYear + "-" + value!.schoolYear.endYear) :
+                                        "select school year"
+                                }
+                            </option>
                             {
-                                value ?
-                                    (value!.schoolYear == null ? "select school year" : value!.schoolYear.startYear + "-" + value!.schoolYear.endYear) :
-                                    "select school year"
+                                (selectSchoolYear || []).map((schoolYear: SchoolYearType) => {
+                                    return (
+                                        <option key={schoolYear.id}
+                                                value={schoolYear.id == null ? undefined : schoolYear.id}>
+                                            {schoolYear.startYear + "-" + schoolYear.endYear}
+                                        </option>
+                                    )
+                                })
                             }
-                        </option>
-                        {
-                            (selectSchoolYear || []).map((schoolYear: SchoolYearType) => {
-                                return (
-                                    <option key={schoolYear.id}
-                                            value={schoolYear.id == null ? undefined : schoolYear.id}>
-                                        {schoolYear.startYear + "-" + schoolYear.endYear}
-                                    </option>
-                                )
-                            })
-                        }
-                    </select>
-                    <p className={"text-danger mt-1"}>validation</p>
+                        </select>
+                    </div>
                 </div>
             </form>
             <button className={"btn btn-secondary"} onClick={onSubmit}>Submit</button>

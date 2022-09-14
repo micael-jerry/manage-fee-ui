@@ -22,7 +22,7 @@ export type GroupType = {
 }
 
 export type FeeType = {
-    id: number,
+    id: number | null,
     type: string,
     description: string | null,
     totalAmount: number,

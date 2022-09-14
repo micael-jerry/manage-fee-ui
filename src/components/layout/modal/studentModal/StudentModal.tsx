@@ -153,8 +153,8 @@ const StudentModal: React.FC<{
                            value={value ? (value.email == null ? "" : value.email) : ""}/>
                     <p className={"text-danger mt-1"}>validation</p>
                 </div>
+                <button className={"btn btn-secondary"} onClick={onSubmit}>Submit</button>
             </form>
-            <button className={"btn btn-secondary"} onClick={onSubmit}>Submit</button>
         </>
     )
 }

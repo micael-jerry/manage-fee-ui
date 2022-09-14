@@ -33,7 +33,6 @@ const Student: React.FC<{
     const getModalValue = async (id: number | string) => {
         await axios.get(BASE_URL + "/users/" + id)
             .then((res: any) => {
-                console.log(res)
                 setModalValue(res.data);
             }).catch((err) => {
                 console.log(err);

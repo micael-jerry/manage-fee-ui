@@ -28,7 +28,7 @@ function App() {
         if (modal == "close") {
             setModalState({
                 studentModal: false,
-                signInModal: false
+                feeModal: false
             })
             setRequest(null);
             setModalValue(null);

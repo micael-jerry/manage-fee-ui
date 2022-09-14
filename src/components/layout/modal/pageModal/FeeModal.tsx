@@ -10,8 +10,10 @@ const FeeModal: React.FC<{
 }> = (props) => {
     const {modalValue, request} = props;
     const [value, setValue] = useState<FeeType>();
-    const [selectStudent, setSelectStudent] = useState<StudentType[]>();
+    const [studentsList, setStudentList] = useState<StudentType[]>();
     const [selectSchoolYear, setSelectSchoolYear] = useState<SchoolYearType[]>();
+    const [studentSelected, setStudentSelected] = useState<StudentType>();
+    const [schoolYearSelected, setSchoolYearSelected] = useState<SchoolYearType>();
 
     useEffect(() => {
         getAllStudent();
@@ -21,13 +23,9 @@ const FeeModal: React.FC<{
         } else {
             setValue(
                 {
-                    description: null,
-                    id: null,
-                    remainingAmount: 0,
-                    schoolYear: null,
-                    student: null,
-                    totalAmount: 0,
-                    type: ""
+                    description: null, id: null,
+                    remainingAmount: 0, schoolYear: null,
+                    student: null, totalAmount: 0, type: ""
                 }
             )
         }
@@ -57,64 +55,57 @@ const FeeModal: React.FC<{
     }
 
     const getAllStudent = async () => {
-        axios.get(BASE_URL + "/users/role/student")
-            .then((res) => {
-                setSelectStudent(res.data);
-            }).catch((err) => {
+        await axios.get(BASE_URL + "/users/role/student").then((res) => {
+            setStudentList(res.data);
+        }).catch((err) => {
             console.log(err)
         })
     }
+
+    const getStudent = async (id: string | number) => {
+        await axios.get(BASE_URL + "/users/" + id).then((res) => {
+            return res.data;
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
     const getAllSchoolYear = async () => {
-        axios.get(BASE_URL + "/school-year")
-            .then((res) => {
-                setSelectSchoolYear(res.data);
-            }).catch((err) => {
+        await axios.get(BASE_URL + "/school-year").then((res) => {
+            setSelectSchoolYear(res.data);
+        }).catch((err) => {
             console.log(err);
         })
     }
 
-    const inputChangeValue = (event: any): void => {
+    const inputChangeValue = async (event: any) => {
         let key = event.target.id;
         let value = event.target.value;
         if (key === "type") {
             setValue((state: any) => {
-                return {
-                    ...state,
-                    "type": value
-                }
+                return {...state, "type": value}
             });
-        }
-        if (key === "totalAmount") {
+        } else if (key === "totalAmount") {
             setValue((state: any) => {
-                return {
-                    ...state,
-                    "totalAmount": value
-                }
+                return {...state, "totalAmount": value}
             });
-        }
-        if (key === "description") {
+        } else if (key === "description") {
             setValue((state: any) => {
-                return {
-                    ...state,
-                    "description": value
-                }
+                return {...state, "description": value}
             });
-        }
-        if (key === "schoolYear") {
+        } else if (key === "student") {
             setValue((state: any) => {
-                return {
-                    ...state,
-                    "schoolYear": value
-                }
-            });
-        }
-        if (key === "student") {
-            setValue((state: any) => {
-                return {
-                    ...state,
-                    "student": value
-                }
-            });
+                console.log(getStudent(studentSelected!.id == null ? 0 : studentSelected!.id))
+                return {...state, "student": studentSelected}
+            })
+        } else if (key === "schoolYear") {
+            await setSchoolYearSelected({
+                id: event.target.value,
+                endYear: "", startYear: ""
+            })
+            await setValue((state: any) => {
+                return {...state, "schoolYear": schoolYearSelected}
+            })
         }
     }
 
@@ -134,23 +125,27 @@ const FeeModal: React.FC<{
                     <input type={"text"} name={"description"} id={"description"}
                            className={"form-control"} onChange={inputChangeValue}
                            value={value ? (value!.description == null ? "" : value!.description) : ""}/>
-                    <select name={"student"} id={"student"}
-                            className="btn btn-sm btn-outline-secondary">
-                        <option
-                            value={value ? (value!.student == null ? undefined : value!.student.id == null ? undefined : value!.student.id) : undefined}
-                            selected={true}>
-                            {value ? (value!.student == null ? "select student" : value!.student.lastname + " " + value!.student.firstname) : "select student"}</option>
-                        {
-                            (selectStudent || []).map((student: StudentType) => {
-                                return (
-                                    <option key={student.id} value={student.id == null ? undefined : student.id}>
-                                        {student.lastname + " " + student.firstname}
-                                    </option>
-                                )
-                            })
-                        }
-                    </select>
+                    <div className={"mt-3"}>
+                        <select name={"student"} id={"student"}
+                                onChange={inputChangeValue}
+                                className="btn btn-sm btn-outline-secondary">
+                            <option
+                                value={value ? (value!.student == null ? undefined : value!.student.id == null ? undefined : value!.student.id) : undefined}
+                                selected={true}>
+                                {value ? (value!.student == null ? "select student" : value!.student.lastname + " " + value!.student.firstname) : "select student"}</option>
+                            {
+                                (studentsList || []).map((student: StudentType) => {
+                                    return (
+                                        <option key={student.id} value={student.id == null ? undefined : student.id}>
+                                            {student.lastname + " " + student.firstname}
+                                        </option>
+                                    )
+                                })
+                            }
+                        </select>
+                    </div>
                     <select name={"schoolYear"} id={"schoolYear"}
+                            onChange={inputChangeValue}
                             className="btn btn-sm btn-outline-secondary">
                         <option
                             value={value ? (value!.schoolYear == null ? undefined : value!.schoolYear.id == null ? undefined : value!.schoolYear.id) : undefined}
@@ -174,8 +169,8 @@ const FeeModal: React.FC<{
                     </select>
                     <p className={"text-danger mt-1"}>validation</p>
                 </div>
-                <button className={"btn btn-secondary"} onClick={onSubmit}>Submit</button>
             </form>
+            <button className={"btn btn-secondary"} onClick={onSubmit}>Submit</button>
         </>
     )
 }

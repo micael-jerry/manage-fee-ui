@@ -76,10 +76,7 @@ const Fee: React.FC<{
                     {
                         (fees || []).map((fee: FeeType) => {
                             return (
-                                <tr key={fee.id} onClick={() => {
-                                    getModalValue(fee.id == null ? 0 : fee.id);
-                                    setRequest("update");
-                                }}>
+                                <tr key={fee.id}>
                                     <td>{fee.student == null ? "" : fee.student.id}</td>
                                     <td>{fee.student == null ? "" : fee.student.lastname}</td>
                                     <td>{fee.type}</td>
@@ -90,6 +87,14 @@ const Fee: React.FC<{
                                         + "-" +
                                         (fee.schoolYear == null ? "" : fee.schoolYear.endYear)
                                     }</td>
+                                    <td>
+                                        <button type="button" className="btn btn-sm btn-outline-secondary"
+                                                onClick={() => {
+                                                    getModalValue(fee.id == null ? 0 : fee.id);
+                                                    setRequest("update");
+                                                }}>SHOW/UPDATE
+                                        </button>
+                                    </td>
                                 </tr>
                             )
                         })

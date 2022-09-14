@@ -95,7 +95,7 @@ const FeeModal: React.FC<{
             setValue((state: any) => {
                 return {
                     ...state, "student": {
-                        "id": event.target.value
+                        "id": value
                     }
                 }
             })
@@ -103,7 +103,7 @@ const FeeModal: React.FC<{
             setValue((state: any) => {
                 return {
                     ...state, "schoolYear": {
-                        "id": event.target.value
+                        "id": value
                     }
                 }
             })
@@ -133,7 +133,8 @@ const FeeModal: React.FC<{
                             <option
                                 value={value ? (value!.student == null ? undefined : value!.student.id == null ? undefined : value!.student.id) : undefined}
                                 selected={true}>
-                                {value ? (value!.student == null ? "select student" : value!.student.lastname + " " + value!.student.firstname) : "select student"}</option>
+                                {value ? (value!.student == null ? "select student" : value!.student.lastname + " " + value!.student.firstname) : "select student"}
+                            </option>
                             {
                                 (studentsList || []).map((student: StudentType) => {
                                     return (

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import './modal.css'
-import {StudentType} from "../../../../types";
+import {GroupType, StudentType} from "../../../../types";
 import axios from "axios";
 import {BASE_URL} from "../../../../properties";
 
@@ -10,30 +10,30 @@ const StudentModal: React.FC<{
 }> = (props) => {
     const {modalValue, request} = props;
     const [value, setValue] = useState<StudentType>();
+    const [groups, setGroups] = useState<GroupType[]>();
 
     useEffect(() => {
+        getAllGroups();
         if (modalValue != null) {
             setValue(modalValue);
         } else {
             setValue(
                 {
-                    entranceDate: "",
-                    groups: null, id: null,
-                    password: null,
-                    ref: "",
-                    username: null,
-                    lastname: "",
-                    firstname: "",
-                    sex: "",
-                    birthDate: "",
-                    address: "",
-                    phone: "",
-                    email: "",
-                    role: "student"
+                    entranceDate: "", groups: null, id: null, password: null, ref: "", username: null,
+                    lastname: "", firstname: "", sex: "", birthDate: "", address: "",
+                    phone: "", email: "", role: "student"
                 }
             )
         }
     }, [modalValue]);
+
+    const getAllGroups = async () => {
+        await axios.get(BASE_URL + "/group").then((res) => {
+            setGroups(res.data);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
 
     const onSubmit = async () => {
         if (request == "add") {
@@ -63,59 +63,36 @@ const StudentModal: React.FC<{
         let value = event.target.value;
         if (key === "lastname") {
             setValue((state: any) => {
-                return {
-                    ...state,
-                    "lastname": value
-                }
+                return {...state, "lastname": value}
             });
-        }
-        if (key === "firstname") {
+        } else if (key === "firstname") {
             setValue((state: any) => {
-                return {
-                    ...state,
-                    "firstname": value
-                }
+                return {...state, "firstname": value}
             });
-        }
-        if (key === "sex") {
+        } else if (key === "sex") {
             setValue((state: any) => {
-                return {
-                    ...state,
-                    "sex": value
-                }
+                return {...state, "sex": value}
             });
-        }
-        if (key === "birthDate") {
+        } else if (key === "birthDate") {
             setValue((state: any) => {
-                return {
-                    ...state,
-                    "birthDate": value
-                }
+                return {...state, "birthDate": value}
             });
-        }
-        if (key === "address") {
+        } else if (key === "address") {
             setValue((state: any) => {
-                return {
-                    ...state,
-                    "address": value
-                }
+                return {...state, "address": value}
             });
-        }
-        if (key === "phone") {
+        } else if (key === "phone") {
             setValue((state: any) => {
-                return {
-                    ...state,
-                    "phone": value
-                }
+                return {...state, "phone": value}
             });
-        }
-        if (key === "email") {
+        } else if (key === "email") {
             setValue((state: any) => {
-                return {
-                    ...state,
-                    "email": value
-                }
+                return {...state, "email": value}
             });
+        } else if (key === "group") {
+            setValue((state: any) => {
+                return {...state, "groups": {"id": value}}
+            })
         }
     }
 
@@ -151,10 +128,29 @@ const StudentModal: React.FC<{
                     <input type={"text"} name={"email"} id={"email"}
                            className={"form-control"} onChange={inputChangeValue}
                            value={value ? (value.email == null ? "" : value.email) : ""}/>
-                    <p className={"text-danger mt-1"}>validation</p>
+                    <div className={"mt-3"}>
+                        <select name={"group"} id={"group"}
+                                onChange={inputChangeValue}
+                                className="btn btn-sm btn-outline-secondary">
+                            <option
+                                value={value ? (value!.groups == null ? undefined : value!.groups.id == null ? undefined : value!.groups.id) : undefined}
+                                selected={true}>
+                                {value ? (value!.groups == null ? "select group" : value!.groups.name) : "select group"}
+                            </option>
+                            {
+                                (groups || []).map((group: GroupType) => {
+                                    return (
+                                        <option key={group.id} value={group.id == null ? undefined : group.id}>
+                                            {group.name}
+                                        </option>
+                                    )
+                                })
+                            }
+                        </select>
+                    </div>
                 </div>
-                <button className={"btn btn-secondary"} onClick={onSubmit}>Submit</button>
             </form>
+            <button className={"btn btn-secondary"} onClick={onSubmit}>Submit</button>
         </>
     )
 }

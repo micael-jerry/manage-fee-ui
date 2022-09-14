@@ -83,17 +83,19 @@ const Student: React.FC<{
                     {
                         (users || []).map((user: StudentType) => {
                             return (
-                                <tr key={user.id} >
+                                <tr key={user.id}>
                                     <td>{user.ref}</td>
                                     <td>{user.lastname}</td>
                                     <td>{user.firstname}</td>
                                     <td>{user.groups == null ? "" : user.groups.name}</td>
                                     <td>{user.entranceDate}</td>
                                     <td>
-                                        <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => {
-                                            getModalValue(user.id == null ? 0 : user.id);
-                                            setRequest("update");
-                                        }}>UPDATE</button>
+                                        <button type="button" className="btn btn-sm btn-outline-secondary"
+                                                onClick={() => {
+                                                    getModalValue(user.id == null ? 0 : user.id);
+                                                    setRequest("update");
+                                                }}>SHOW/UPDATE
+                                        </button>
                                     </td>
                                 </tr>
                             )

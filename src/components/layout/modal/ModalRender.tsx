@@ -4,16 +4,18 @@ import Modal from "./Modal";
 
 const ModalRender: React.FC<{
     modalState: any,
-    toggleModal: (newState: any) => void
+    toggleModal: (newState: any) => void,
+    modalValue: any,
+    request:string | null,
 }> = (props) => {
-    const {modalState,toggleModal} = props;
+    const {modalState, toggleModal, modalValue,request} = props;
 
     return (
         <>
             {
                 modalState.studentModal && (
                     <Modal toggleModal={toggleModal}>
-                        <StudentModal/>
+                        <StudentModal modalValue={modalValue} request={request}/>
                     </Modal>
                 )
             }

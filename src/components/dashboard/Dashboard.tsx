@@ -10,8 +10,12 @@ import SideBar from "../layout/SideBar";
 import Fee from "../pages/Fee";
 import Transaction from "../pages/Transaction";
 
-const Dashboard: React.FC<{}> = (props) => {
-
+const Dashboard: React.FC<{
+    toggleModal: (modal: string) => void
+    setModalValue: (value: any) => void,
+    setRequest: (value: string | null) => void
+}> = (props) => {
+    const {toggleModal, setModalValue, setRequest} = props;
     return (
         <div className="container-fluid">
             <div className="row">
@@ -20,7 +24,7 @@ const Dashboard: React.FC<{}> = (props) => {
                     <Routes>
                         <Route path={"/"} element={<Home/>}></Route>
                         <Route path={"/fees"} element={<Fee/>}></Route>
-                        <Route path={"/students"} element={<Student/>}></Route>
+                        <Route path={"/students"} element={<Student toggleModal={toggleModal} setModalValue={setModalValue} setRequest={setRequest}/>}></Route>
                         <Route path={"/transaction"} element={<Transaction/>}></Route>
                         <Route path={"/content"} element={<Content/>}></Route>
                         <Route path={"*"} element={<NotFound/>}></Route>

@@ -1,5 +1,5 @@
 export type StudentType = {
-    id: number,
+    id: number | null,
     ref: string,
     lastname: string,
     firstname: string | null,
@@ -9,7 +9,7 @@ export type StudentType = {
     phone: string | null,
     email: string | null,
     entranceDate: string,
-    groups: GroupType,
+    groups: GroupType | null,
     username: string | null,
     password: string | null
     role: string

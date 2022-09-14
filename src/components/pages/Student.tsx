@@ -4,7 +4,12 @@ import {StudentType} from "../../types";
 import Navbar from "../layout/Navbar";
 import {BASE_URL} from "../../properties";
 
-const Student: React.FC<{}> = (props) => {
+const Student: React.FC<{
+    toggleModal: (modal: string) => void,
+    setModalValue: (value: any) => void,
+    setRequest: (value: string | null) => void
+}> = (props) => {
+    const {toggleModal, setModalValue, setRequest} = props;
     const [users, setUsers] = useState<StudentType[]>();
 
     useEffect(() => {
@@ -25,6 +30,17 @@ const Student: React.FC<{}> = (props) => {
             });
     }
 
+    const getModalValue = async (id: number | string) => {
+        await axios.get(BASE_URL + "/users/" + id)
+            .then((res: any) => {
+                console.log(res)
+                setModalValue(res.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+        await toggleModal("studentModal");
+    }
+
     return (
         <>
             <Navbar searchBar={true} search={searchByLastname} labelSearch={"Search by lastname"}/>
@@ -33,8 +49,13 @@ const Student: React.FC<{}> = (props) => {
                 <h1 className="h2">Dashboard</h1>
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <div className="btn-group me-2">
-                        <button type="button" className="btn btn-sm btn-outline-secondary">ADD NEW STUDENT</button>
-                        <select  name={"sortByLastName"} id={"sortByLastName"} className="btn btn-sm btn-outline-secondary">
+                        <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => {
+                            setRequest("add");
+                            toggleModal("studentModal");
+                        }}>ADD NEW STUDENT
+                        </button>
+                        <select name={"sortByLastName"} id={"sortByLastName"}
+                                className="btn btn-sm btn-outline-secondary">
                             <option value={undefined} selected={true}>Sort by lastname</option>
                             <option value={"asc"}>asc</option>
                             <option value={"desc"}>desc</option>
@@ -63,12 +84,18 @@ const Student: React.FC<{}> = (props) => {
                     {
                         (users || []).map((user: StudentType) => {
                             return (
-                                <tr key={user.id}>
+                                <tr key={user.id} >
                                     <td>{user.ref}</td>
                                     <td>{user.lastname}</td>
                                     <td>{user.firstname}</td>
                                     <td>{user.groups == null ? "" : user.groups.name}</td>
                                     <td>{user.entranceDate}</td>
+                                    <td>
+                                        <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => {
+                                            getModalValue(user.id == null ? 0 : user.id);
+                                            setRequest("update");
+                                        }}>UPDATE</button>
+                                    </td>
                                 </tr>
                             )
                         })

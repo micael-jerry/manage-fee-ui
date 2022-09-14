@@ -1,34 +1,42 @@
 import React, {useState} from 'react';
 import Dashboard from "./components/dashboard/Dashboard";
 import ModalRender from "./components/layout/modal/ModalRender";
-import {FeeType, GroupType, StudentType} from "./types";
+import {FeeType, GroupType, StudentType, TransactionType} from "./types";
 
 function App() {
     const [modalState, setModalState] = useState<any>({
         studentModal: false,
-        feeModal: false
+        feeModal: false,
+        transactionModal: false
     });
 
-    const [modalValue, setModalValue] = useState<null | StudentType | GroupType | FeeType>(null);
+    const [modalValue, setModalValue] = useState<null | StudentType | GroupType | FeeType | TransactionType>(null);
     const [request, setRequest] = useState<string | null>(null);
 
     const toggleModal = (modal: string) => {
         if (modal == "studentModal") {
             setModalState({
                 studentModal: true,
-                feeModal: false
+                feeModal: false,
+                transactionModal: false
             })
-        }
-        if (modal == "feeModal") {
+        } else if (modal == "feeModal") {
             setModalState({
                 studentModal: false,
-                feeModal: true
+                feeModal: true,
+                transactionModal: false
             })
-        }
-        if (modal == "close") {
+        } else if (modal == "transactionModal") {
             setModalState({
                 studentModal: false,
-                feeModal: false
+                feeModal: false,
+                transactionModal: true
+            })
+        } else if (modal == "close") {
+            setModalState({
+                studentModal: false,
+                feeModal: false,
+                transactionModal: false
             })
             setRequest(null);
             setModalValue(null);

@@ -80,8 +80,8 @@ const Fee: React.FC<{
                                     <td>{fee.student == null ? "" : fee.student.id}</td>
                                     <td>{fee.student == null ? "" : fee.student.lastname}</td>
                                     <td>{fee.type}</td>
-                                    <td>{fee.remainingAmount}</td>
-                                    <td>{fee.totalAmount}</td>
+                                    <td>{fee.remainingAmount} Ar</td>
+                                    <td>{fee.totalAmount} Ar</td>
                                     <td>{
                                         (fee.schoolYear == null ? "" : fee.schoolYear.startYear)
                                         + "-" +

@@ -60,14 +60,6 @@ const FeeModal: React.FC<{
         })
     }
 
-    const getStudent = async (id: string | number) => {
-        await axios.get(BASE_URL + "/users/" + id).then((res) => {
-            return res.data;
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
-
     const getAllSchoolYear = async () => {
         await axios.get(BASE_URL + "/school-year").then((res) => {
             setSelectSchoolYear(res.data);

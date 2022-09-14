@@ -26,7 +26,9 @@ const Dashboard: React.FC<{
                         <Route path={"/students"}
                                element={<Student toggleModal={toggleModal} setModalValue={setModalValue}
                                                  setRequest={setRequest}/>}></Route>
-                        <Route path={"/transaction"} element={<Transaction/>}></Route>
+                        <Route path={"/transaction"}
+                               element={<Transaction toggleModal={toggleModal} setModalValue={setModalValue}
+                                                     setRequest={setRequest}/>}></Route>
                         <Route path={"*"} element={<NotFound/>}></Route>
                     </Routes>
                 </main>

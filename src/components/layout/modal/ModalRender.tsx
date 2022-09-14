@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import StudentModal from "./pageModal/StudentModal";
 import Modal from "./Modal";
 import FeeModal from "./pageModal/FeeModal";
+import TransactionModal from "./pageModal/TransactionModal";
 
 const ModalRender: React.FC<{
     modalState: any,
@@ -24,6 +25,13 @@ const ModalRender: React.FC<{
                 modalState.feeModal && (
                     <Modal toggleModal={toggleModal}>
                         <FeeModal modalValue={modalValue} request={request}/>
+                    </Modal>
+                )
+            }
+            {
+                modalState.transactionModal && (
+                    <Modal toggleModal={toggleModal}>
+                        <TransactionModal modalValue={modalValue} request={request}/>
                     </Modal>
                 )
             }

@@ -37,6 +37,14 @@ export type SchoolYearType = {
     endYear: string
 }
 
+export type TransactionType = {
+    id: number | null,
+    amount: number,
+    date: string,
+    description: string | null,
+    fee: FeeType | null
+}
+
 
 export type BasicAuth = {
     username: string | null,

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import StudentModal from "./studentModal/StudentModal";
+import StudentModal from "./pageModal/StudentModal";
 import Modal from "./Modal";
 
 const ModalRender: React.FC<{

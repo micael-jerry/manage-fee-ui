@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Dashboard from "./components/dashboard/Dashboard";
 import ModalRender from "./components/layout/modal/ModalRender";
-import {GroupType, StudentType} from "./types";
+import {FeeType, GroupType, StudentType} from "./types";
 
 function App() {
     const [modalState, setModalState] = useState<any>({
@@ -9,7 +9,7 @@ function App() {
         feeModal: false
     });
 
-    const [modalValue, setModalValue] = useState<null | StudentType | GroupType>(null);
+    const [modalValue, setModalValue] = useState<null | StudentType | GroupType | FeeType>(null);
     const [request, setRequest] = useState<string | null>(null);
 
     const toggleModal = (modal: string) => {
@@ -22,7 +22,7 @@ function App() {
         if (modal == "feeModal") {
             setModalState({
                 studentModal: false,
-                feeModal: false
+                feeModal: true
             })
         }
         if (modal == "close") {

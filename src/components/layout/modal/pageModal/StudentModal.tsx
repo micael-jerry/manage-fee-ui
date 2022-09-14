@@ -108,11 +108,11 @@ const StudentModal: React.FC<{
                     <input type={"text"} name={"firstname"} id={"firstname"}
                            className={"form-control"} onChange={inputChangeValue}
                            value={value ? (value.firstname == null ? "" : value.firstname) : ""}/>
-                    <label htmlFor={"sex"}>sex</label>
+                    <label htmlFor={"sex"}>sex <span className={"text-danger"}>M/F</span> </label>
                     <input type={"text"} name={"sex"} id={"sex"} required
                            className={"form-control"} onChange={inputChangeValue}
                            value={value ? (value.sex) : ""}/>
-                    <label htmlFor={"birthDate"}>birthDate</label>
+                    <label htmlFor={"birthDate"}>birthDate <span className={"text-danger"}>format: yyyy-MM-dd</span> </label>
                     <input type={"text"} name={"birthDate"} id={"birthDate"} required
                            className={"form-control"} onChange={inputChangeValue}
                            value={value ? (value.birthDate) : ""}/>

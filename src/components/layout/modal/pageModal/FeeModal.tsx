@@ -114,7 +114,7 @@ const FeeModal: React.FC<{
         <>
             <form className={"student-modal"}>
                 <div className={"mb-3"}>
-                    <label htmlFor={"type"}>type</label>
+                    <label htmlFor={"type"}>type <span className={"text-danger"}>TUITION/HARDWARE</span></label>
                     <input type={"text"} name={"type"} id={"type"} required
                            className={"form-control"} onChange={inputChangeValue}
                            value={value ? (value.type) : ""}/>

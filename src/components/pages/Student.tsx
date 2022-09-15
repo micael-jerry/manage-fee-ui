@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import axios, {AxiosBasicCredentials} from "axios";
 import {StudentType} from "../../types";
 import Navbar from "../layout/Navbar";
 import {BASE_URL} from "../../properties";
@@ -7,36 +7,53 @@ import {BASE_URL} from "../../properties";
 const Student: React.FC<{
     toggleModal: (modal: string) => void,
     setModalValue: (value: any) => void,
-    setRequest: (value: string | null) => void
+    setRequest: (value: string | null) => void,
+    credentials: AxiosBasicCredentials | null | undefined
 }> = (props) => {
-    const {toggleModal, setModalValue, setRequest} = props;
+    const {toggleModal, setModalValue, setRequest, credentials} = props;
     const [users, setUsers] = useState<StudentType[]>();
 
     useEffect(() => {
-        axios.get(BASE_URL + "/users/role/student")
-            .then((res) => {
-                setUsers(res.data)
-            }).catch((err) => {
-            console.log(err)
-        })
+        if (credentials) {
+            axios({
+                method: "get",
+                url: BASE_URL + "/users/role/student",
+                auth: credentials
+            })
+                .then((res) => {
+                    setUsers(res.data)
+                }).catch((err) => {
+                console.log(err)
+            })
+        }
     }, []);
 
     const searchByLastname = async (lastname: string) => {
-        await axios.get(BASE_URL + "/users/role/student?lastname=" + lastname)
-            .then((res: any) => {
+        if (credentials) {
+            await axios({
+                method: "get",
+                url: BASE_URL + "/users/role/student?lastname=" + lastname,
+                auth: credentials
+            }).then((res: any) => {
                 setUsers(res.data);
             }).catch((err) => {
                 console.log(err);
             });
+        }
     }
 
     const getModalValue = async (id: number | string) => {
-        await axios.get(BASE_URL + "/users/" + id)
-            .then((res: any) => {
+        if (credentials) {
+            await axios({
+                method: "get",
+                url: BASE_URL + "/users/" + id,
+                auth: credentials
+            }).then((res: any) => {
                 setModalValue(res.data);
             }).catch((err) => {
                 console.log(err);
             })
+        }
         await toggleModal("studentModal");
     }
 

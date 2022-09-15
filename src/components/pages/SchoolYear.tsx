@@ -1,34 +1,44 @@
 import React, {useEffect, useState} from "react";
-import Navbar from "../layout/Navbar";
-import axios from "axios";
+import axios, {AxiosBasicCredentials} from "axios";
 import {BASE_URL} from "../../properties";
 import {SchoolYearType} from "../../types";
 
 const SchoolYear: React.FC<{
     toggleModal: (modal: string) => void,
     setModalValue: (value: any) => void,
-    setRequest: (value: string | null) => void
+    setRequest: (value: string | null) => void,
+    credentials: AxiosBasicCredentials | null | undefined
 }> = (props) => {
-    const {toggleModal, setModalValue, setRequest} = props;
+    const {toggleModal, setModalValue, setRequest, credentials} = props;
     const [schoolYears, setSchoolYears] = useState<SchoolYearType[]>();
 
     useEffect(() => {
-        axios.get(BASE_URL + "/school-year")
-            .then((res: any): void => {
+        if (credentials) {
+            axios({
+                method: "get",
+                url: BASE_URL + "/school-year",
+                auth: credentials
+            }).then((res: any): void => {
                 setSchoolYears(res.data);
                 console.log(res.data)
             }).catch((err) => {
-            console.log(err)
-        })
+                console.log(err)
+            })
+        }
     }, []);
 
     const getModalValue = async (id: number | string) => {
-        await axios.get(BASE_URL + "/school-year/" + id)
-            .then((res: any) => {
+        if (credentials) {
+            await axios({
+                method: "get",
+                url: BASE_URL + "/school-year/" + id,
+                auth: credentials
+            }).then((res: any) => {
                 setModalValue(res.data);
             }).catch((err) => {
                 console.log(err);
             })
+        }
         await toggleModal("schoolYearModal");
     }
 

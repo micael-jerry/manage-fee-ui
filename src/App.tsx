@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
-import Dashboard from "./components/dashboard/Dashboard";
+import React, {useEffect, useState} from 'react';
+
 import ModalRender from "./components/layout/modal/ModalRender";
 import {FeeType, GroupType, StudentType, TransactionType} from "./types";
+import Page from "./components/pages/Page";
+import {AxiosBasicCredentials} from "axios";
 
 function App() {
     const [modalState, setModalState] = useState<any>({
@@ -11,6 +13,33 @@ function App() {
         groupModal: false,
         schoolYearModal: false
     });
+
+    const [credentials, setCredentials] = useState<AxiosBasicCredentials | null | undefined>(null);
+
+    useEffect(() => {
+        let localUsername = localStorage.getItem("username");
+        let localPassword = localStorage.getItem("password")
+        if (localPassword != null && localUsername != null) {
+            setCredentials({
+                username: localUsername,
+                password: localPassword
+            });
+        }
+    }, [])
+
+    useEffect(() => {
+        if (credentials) {
+            if (credentials.username != null && credentials.password != null) {
+                localStorage.setItem("username", credentials.username);
+                localStorage.setItem("password", credentials.password);
+            }
+        }
+    }, [credentials]);
+
+    const logout = (): void => {
+        setCredentials(null);
+        localStorage.clear();
+    }
 
     const [modalValue, setModalValue] = useState<null | StudentType | GroupType | FeeType | TransactionType>(null);
     const [request, setRequest] = useState<string | null>(null);
@@ -71,8 +100,10 @@ function App() {
 
     return (
         <>
-            <ModalRender modalState={modalState} toggleModal={toggleModal} modalValue={modalValue} request={request}/>
-            <Dashboard toggleModal={toggleModal} setModalValue={setModalValue} setRequest={setRequest}/>
+            <ModalRender modalState={modalState} toggleModal={toggleModal} modalValue={modalValue} request={request}
+                         credentials={credentials}/>
+            <Page toggleModal={toggleModal} setModalValue={setModalValue} setRequest={setRequest}
+                  credentials={credentials} setCredentials={setCredentials} logout={logout}/>
         </>
     );
 }

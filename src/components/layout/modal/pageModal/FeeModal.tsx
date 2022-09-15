@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
 import './modal.css'
 import {FeeType, SchoolYearType, StudentType} from "../../../../types";
-import axios from "axios";
+import axios, {AxiosBasicCredentials} from "axios";
 import {BASE_URL} from "../../../../properties";
 
 const FeeModal: React.FC<{
     modalValue: any,
-    request: string | null
+    request: string | null,
+    credentials: AxiosBasicCredentials | null | undefined
 }> = (props) => {
-    const {modalValue, request} = props;
+    const {modalValue, request, credentials} = props;
     const [value, setValue] = useState<FeeType>();
     const [studentsList, setStudentList] = useState<StudentType[]>();
     const [selectSchoolYear, setSelectSchoolYear] = useState<SchoolYearType[]>();
@@ -30,42 +31,61 @@ const FeeModal: React.FC<{
     }, [modalValue]);
 
     const onSubmit = async () => {
-        if (request == "add") {
-            let data = [];
-            data.push(value);
-            await axios.post(
-                BASE_URL + "/fees", data
-            ).then((res) => {
-                console.log(res);
-            }).catch((err) => {
-                console.log(err);
-            })
-        } else if (request == "update") {
-            await axios.put(
-                BASE_URL + "/fees/" + value!.id,
-                value
-            ).then((res) => {
-                console.log(res);
-            }).catch((err) => {
-                console.log(err);
-            })
+        if (credentials) {
+            if (request == "add") {
+                let data = [];
+                data.push(value);
+                await axios({
+                    method: "post",
+                    url: BASE_URL + "/fees",
+                    data: data,
+                    auth: credentials
+                }).then((res) => {
+                    console.log(res);
+                }).catch((err) => {
+                    console.log(err);
+                })
+            } else if (request == "update") {
+                await axios({
+                    method: "put",
+                    url: BASE_URL + "/fees/" + value!.id,
+                    data: value,
+                    auth: credentials
+                }).then((res) => {
+                    console.log(res);
+                }).catch((err) => {
+                    console.log(err);
+                })
+            }
         }
     }
 
     const getAllStudent = async () => {
-        await axios.get(BASE_URL + "/users/role/student").then((res) => {
-            setStudentList(res.data);
-        }).catch((err) => {
-            console.log(err)
-        })
+        if (credentials) {
+            await axios({
+                method: "get",
+                url: BASE_URL + "/users/role/student",
+                auth: credentials
+            }).then((res) => {
+                setStudentList(res.data);
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
     }
 
     const getAllSchoolYear = async () => {
-        await axios.get(BASE_URL + "/school-year").then((res) => {
-            setSelectSchoolYear(res.data);
-        }).catch((err) => {
-            console.log(err);
-        })
+        if (credentials) {
+            await axios({
+                method: "get",
+                url: BASE_URL + "/school-year",
+                auth: credentials
+            }).then((res) => {
+                setSelectSchoolYear(res.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     }
 
     const inputChangeValue = async (event: any) => {

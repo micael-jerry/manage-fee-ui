@@ -2,13 +2,15 @@ import React from "react";
 import Navbar from "../layout/Navbar";
 import Group from "./Group";
 import SchoolYear from "./SchoolYear";
+import {AxiosBasicCredentials} from "axios";
 
 const Other: React.FC<{
     toggleModal: (modal: string) => void
     setModalValue: (value: any) => void,
-    setRequest: (value: string | null) => void
+    setRequest: (value: string | null) => void,
+    credentials: AxiosBasicCredentials | null | undefined
 }> = (props) => {
-    const {toggleModal, setModalValue, setRequest} = props;
+    const {toggleModal, setModalValue, setRequest, credentials} = props;
     return (
         <>
             <Navbar/>
@@ -32,11 +34,13 @@ const Other: React.FC<{
             </div>
             <div className={"row"}>
                 <div className={"col-6"}>
-                    <Group toggleModal={toggleModal} setModalValue={setModalValue} setRequest={setRequest}/>
+                    <Group toggleModal={toggleModal} setModalValue={setModalValue} setRequest={setRequest}
+                           credentials={credentials}/>
                 </div>
                 <div className={"col-1"}></div>
                 <div className={"col"}>
-                    <SchoolYear toggleModal={toggleModal} setModalValue={setModalValue} setRequest={setRequest}/>
+                    <SchoolYear toggleModal={toggleModal} setModalValue={setModalValue} setRequest={setRequest}
+                                credentials={credentials}/>
                 </div>
             </div>
         </>

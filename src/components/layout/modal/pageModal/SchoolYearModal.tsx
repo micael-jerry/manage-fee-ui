@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
 import './modal.css'
 import {SchoolYearType} from "../../../../types";
-import axios from "axios";
+import axios, {AxiosBasicCredentials} from "axios";
 import {BASE_URL} from "../../../../properties";
 
 const SchoolYearModal: React.FC<{
     modalValue: any,
-    request: string | null
+    request: string | null,
+    credentials: AxiosBasicCredentials | null | undefined
 }> = (props) => {
-    const {modalValue, request} = props;
+    const {modalValue, request, credentials} = props;
     const [value, setValue] = useState<SchoolYearType>();
 
     useEffect(() => {
@@ -20,25 +21,32 @@ const SchoolYearModal: React.FC<{
     }, [modalValue]);
 
     const onSubmit = async () => {
-        let data = [];
-        data.push(value)
-        if (request == "add") {
-            await axios.post(
-                BASE_URL + "/school-year", data
-            ).then((res) => {
-                console.log(res);
-            }).catch((err) => {
-                console.log(err);
-            })
-        } else if (request == "update") {
-            await axios.put(
-                BASE_URL + "/school-year/" + value!.id,
-                value
-            ).then((res) => {
-                console.log(res);
-            }).catch((err) => {
-                console.log(err);
-            })
+        if (credentials) {
+            if (request == "add") {
+                let data = [];
+                data.push(value)
+                await axios({
+                    method: "post",
+                    url: BASE_URL + "/school-year",
+                    data: data,
+                    auth: credentials
+                }).then((res) => {
+                    console.log(res);
+                }).catch((err) => {
+                    console.log(err);
+                })
+            } else if (request == "update") {
+                await axios({
+                    method: "put",
+                    url: BASE_URL + "/school-year/" + value!.id,
+                    data: value,
+                    auth: credentials
+                }).then((res) => {
+                    console.log(res);
+                }).catch((err) => {
+                    console.log(err);
+                })
+            }
         }
     }
 

@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
 import './modal.css'
-import {FeeType, SchoolYearType, StudentType, TransactionType} from "../../../../types";
-import axios from "axios";
+import {FeeType, TransactionType} from "../../../../types";
+import axios, {AxiosBasicCredentials} from "axios";
 import {BASE_URL} from "../../../../properties";
 
 const Transaction: React.FC<{
     modalValue: any,
-    request: string | null
+    request: string | null,
+    credentials: AxiosBasicCredentials | null | undefined
 }> = (props) => {
-    const {modalValue, request} = props;
+    const {modalValue, request, credentials} = props;
     const [value, setValue] = useState<TransactionType>();
     const [fees, setFees] = useState<FeeType[]>();
 
@@ -22,32 +23,43 @@ const Transaction: React.FC<{
     }, [modalValue]);
 
     const onSubmit = async () => {
-        if (request == "add") {
-            await axios.post(
-                BASE_URL + "/transaction", value
-            ).then((res) => {
-                console.log(res);
-            }).catch((err) => {
-                console.log(err);
-            })
-        } else if (request == "update") {
-            await axios.put(
-                BASE_URL + "/transaction/" + value!.id,
-                value
-            ).then((res) => {
-                console.log(res);
-            }).catch((err) => {
-                console.log(err);
-            })
+        if (credentials) {
+            if (request == "add") {
+                await axios({
+                    method: "post", url: BASE_URL + "/transaction",
+                    data: value, auth: credentials
+                }).then((res) => {
+                    console.log(res);
+                }).catch((err) => {
+                    console.log(err);
+                });
+            } else if (request == "update") {
+                await axios({
+                    method: "put",
+                    url: BASE_URL + "/transaction/" + value!.id,
+                    data: value,
+                    auth: credentials
+                }).then((res) => {
+                    console.log(res);
+                }).catch((err) => {
+                    console.log(err);
+                })
+            }
         }
     }
 
     const getAllFees = async () => {
-        await axios.get(BASE_URL + "/fees").then((res) => {
-            setFees(res.data);
-        }).catch((err) => {
-            console.log(err)
-        })
+        if (credentials) {
+            await axios({
+                method: "get",
+                url: BASE_URL + "/fees",
+                auth: credentials
+            }).then((res) => {
+                setFees(res.data);
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
     }
 
     const inputChangeValue = async (event: any) => {

@@ -46,7 +46,7 @@ export type TransactionType = {
 }
 
 
-export type BasicAuth = {
+export type BasicAuthType = {
     username: string | null,
     password: string | null
 }

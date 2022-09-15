@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 type navProps = {
     search?: (regex: string) => any,
     labelSearch?: string,
-    searchBar?: boolean
+    searchBar?: boolean,
 }
 
 const Navbar: React.FC<navProps> = (props) => {

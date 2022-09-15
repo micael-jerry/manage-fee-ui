@@ -1,7 +1,10 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-const SideBar: React.FC<{}> = (props) => {
+const SideBar: React.FC<{
+    logout: () => void
+}> = (props) => {
+    const {logout} = props;
     return (
         <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
             <div className="position-sticky pt-3">
@@ -37,6 +40,7 @@ const SideBar: React.FC<{}> = (props) => {
                         </Link>
                     </li>
                 </ul>
+                <button onClick={logout} >LOGOUT</button>
             </div>
         </nav>
     )

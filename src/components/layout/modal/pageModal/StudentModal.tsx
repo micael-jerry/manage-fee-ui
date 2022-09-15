@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
 import './modal.css'
 import {GroupType, StudentType} from "../../../../types";
-import axios from "axios";
+import axios, {AxiosBasicCredentials} from "axios";
 import {BASE_URL} from "../../../../properties";
 
 const StudentModal: React.FC<{
     modalValue: any,
-    request: string | null
+    request: string | null,
+    credentials: AxiosBasicCredentials | null | undefined
 }> = (props) => {
-    const {modalValue, request} = props;
+    const {modalValue, request, credentials} = props;
     const [value, setValue] = useState<StudentType>();
     const [groups, setGroups] = useState<GroupType[]>();
 
@@ -28,33 +29,46 @@ const StudentModal: React.FC<{
     }, [modalValue]);
 
     const getAllGroups = async () => {
-        await axios.get(BASE_URL + "/group").then((res) => {
-            setGroups(res.data);
-        }).catch((err) => {
-            console.log(err);
-        })
+        if (credentials) {
+            await axios({
+                method: "get",
+                url: BASE_URL + "/group",
+                auth: credentials
+            }).then((res) => {
+                setGroups(res.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     }
 
     const onSubmit = async () => {
-        if (request == "add") {
-            let data = [];
-            data.push(value);
-            await axios.post(
-                BASE_URL + "/users", data
-            ).then((res) => {
-                console.log(res);
-            }).catch((err) => {
-                console.log(err);
-            })
-        } else if (request == "update") {
-            await axios.put(
-                BASE_URL + "/users/" + value!.id,
-                value
-            ).then((res) => {
-                console.log(res);
-            }).catch((err) => {
-                console.log(err);
-            })
+        if (credentials) {
+            if (request == "add") {
+                let data = [];
+                data.push(value);
+                await axios({
+                    method: "post",
+                    url: BASE_URL + "/users",
+                    data: data,
+                    auth: credentials
+                }).then((res) => {
+                    console.log(res);
+                }).catch((err) => {
+                    console.log(err);
+                })
+            } else if (request == "update") {
+                await axios({
+                    method: "put",
+                    url: BASE_URL + "/users/" + value!.id,
+                    data: value,
+                    auth: credentials
+                }).then((res) => {
+                    console.log(res);
+                }).catch((err) => {
+                    console.log(err);
+                })
+            }
         }
     }
 
@@ -112,7 +126,8 @@ const StudentModal: React.FC<{
                     <input type={"text"} name={"sex"} id={"sex"} required
                            className={"form-control"} onChange={inputChangeValue}
                            value={value ? (value.sex) : ""}/>
-                    <label htmlFor={"birthDate"}>birthDate <span className={"text-danger"}>format: yyyy-MM-dd</span> </label>
+                    <label htmlFor={"birthDate"}>birthDate <span className={"text-danger"}>format: yyyy-MM-dd</span>
+                    </label>
                     <input type={"text"} name={"birthDate"} id={"birthDate"} required
                            className={"form-control"} onChange={inputChangeValue}
                            value={value ? (value.birthDate) : ""}/>

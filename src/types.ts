@@ -16,7 +16,7 @@ export type StudentType = {
 }
 
 export type GroupType = {
-    id: number,
+    id: number | null,
     name: string,
     description: string | null
 }

@@ -3,6 +3,7 @@ import StudentModal from "./pageModal/StudentModal";
 import Modal from "./Modal";
 import FeeModal from "./pageModal/FeeModal";
 import TransactionModal from "./pageModal/TransactionModal";
+import GroupModal from "./pageModal/GroupModal";
 
 const ModalRender: React.FC<{
     modalState: any,
@@ -32,6 +33,13 @@ const ModalRender: React.FC<{
                 modalState.transactionModal && (
                     <Modal toggleModal={toggleModal}>
                         <TransactionModal modalValue={modalValue} request={request}/>
+                    </Modal>
+                )
+            }
+            {
+                modalState.groupModal && (
+                    <Modal toggleModal={toggleModal}>
+                        <GroupModal modalValue={modalValue} request={request}/>
                     </Modal>
                 )
             }

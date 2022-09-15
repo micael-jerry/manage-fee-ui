@@ -7,7 +7,8 @@ function App() {
     const [modalState, setModalState] = useState<any>({
         studentModal: false,
         feeModal: false,
-        transactionModal: false
+        transactionModal: false,
+        groupModal: false
     });
 
     const [modalValue, setModalValue] = useState<null | StudentType | GroupType | FeeType | TransactionType>(null);
@@ -18,25 +19,36 @@ function App() {
             setModalState({
                 studentModal: true,
                 feeModal: false,
-                transactionModal: false
+                transactionModal: false,
+                groupModal: false
             })
         } else if (modal == "feeModal") {
             setModalState({
                 studentModal: false,
                 feeModal: true,
-                transactionModal: false
+                transactionModal: false,
+                groupModal: false
             })
         } else if (modal == "transactionModal") {
             setModalState({
                 studentModal: false,
                 feeModal: false,
-                transactionModal: true
+                transactionModal: true,
+                groupModal: false
+            })
+        } else if (modal == "groupModal") {
+            setModalState({
+                studentModal: false,
+                feeModal: false,
+                transactionModal: false,
+                groupModal: true
             })
         } else if (modal == "close") {
             setModalState({
                 studentModal: false,
                 feeModal: false,
-                transactionModal: false
+                transactionModal: false,
+                groupModal: false
             })
             setRequest(null);
             setModalValue(null);

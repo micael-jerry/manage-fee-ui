@@ -7,6 +7,7 @@ import NotFound from "../pages/NotFound";
 import SideBar from "../layout/SideBar";
 import Fee from "../pages/Fee";
 import Transaction from "../pages/Transaction";
+import Group from "../pages/Group";
 
 const Dashboard: React.FC<{
     toggleModal: (modal: string) => void
@@ -29,6 +30,8 @@ const Dashboard: React.FC<{
                         <Route path={"/transaction"}
                                element={<Transaction toggleModal={toggleModal} setModalValue={setModalValue}
                                                      setRequest={setRequest}/>}></Route>
+                        <Route path={"/group"} element={<Group toggleModal={toggleModal} setModalValue={setModalValue}
+                                                               setRequest={setRequest}/>}></Route>
                         <Route path={"*"} element={<NotFound/>}></Route>
                     </Routes>
                 </main>

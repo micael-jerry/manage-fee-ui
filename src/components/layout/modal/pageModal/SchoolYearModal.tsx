@@ -48,6 +48,7 @@ const SchoolYearModal: React.FC<{
                 })
             }
         }
+        await window.location.reload();
     }
 
     const inputChangeValue = async (event: any) => {

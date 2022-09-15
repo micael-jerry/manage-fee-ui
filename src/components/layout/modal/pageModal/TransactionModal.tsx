@@ -46,6 +46,7 @@ const Transaction: React.FC<{
                 })
             }
         }
+        await window.location.reload();
     }
 
     const getAllFees = async () => {

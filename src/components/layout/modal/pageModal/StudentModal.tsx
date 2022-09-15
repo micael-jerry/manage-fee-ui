@@ -70,6 +70,7 @@ const StudentModal: React.FC<{
                 })
             }
         }
+        await window.location.reload();
     }
 
     const inputChangeValue = (event: any): void => {

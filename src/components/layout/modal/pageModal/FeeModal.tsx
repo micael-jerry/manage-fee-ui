@@ -58,6 +58,7 @@ const FeeModal: React.FC<{
                 })
             }
         }
+        await window.location.reload();
     }
 
     const getAllStudent = async () => {

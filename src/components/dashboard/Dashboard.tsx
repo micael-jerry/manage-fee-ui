@@ -2,7 +2,6 @@ import React from "react";
 import './dashboard.css'
 import {Route, Routes} from "react-router-dom";
 import Student from "../pages/Student";
-import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import SideBar from "../layout/SideBar";
 import Fee from "../pages/Fee";
@@ -24,8 +23,7 @@ const Dashboard: React.FC<{
                 <SideBar logout={logout}/>
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <Routes>
-                        <Route path={"/"} element={<Home/>}></Route>
-                        <Route path={"/fees"} element={<Fee toggleModal={toggleModal} setModalValue={setModalValue}
+                        <Route path={"/"} element={<Fee toggleModal={toggleModal} setModalValue={setModalValue}
                                                             setRequest={setRequest}
                                                             credentials={credentials}/>}></Route>
                         <Route path={"/students"}

@@ -10,21 +10,18 @@ const SideBar: React.FC<{
             <div className="position-sticky pt-3">
                 <ul className="nav flex-column">
                     <li className="nav-item">
-                        <Link className="nav-link" to={"/"}>Home</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to={"/fees"}>
+                        <Link className="nav-link" to={"/"}>
                             Fee
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to={"/transaction"}>
-                            Transaction
                         </Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to={"/students"}>
                             Students
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to={"/transaction"}>
+                            Transaction
                         </Link>
                     </li>
                 </ul>
@@ -40,7 +37,9 @@ const SideBar: React.FC<{
                         </Link>
                     </li>
                 </ul>
-                <button onClick={logout} >LOGOUT</button>
+            </div>
+            <div className={"mt-5 d-flex justify-content-center"}>
+                <button type={"button"} className={"btn btn-outline-dark btn-lg"} onClick={logout} >LOGOUT</button>
             </div>
         </nav>
     )

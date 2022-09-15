@@ -10,7 +10,7 @@ const Transaction: React.FC<{
     setRequest: (value: string | null) => void,
     credentials: AxiosBasicCredentials | null | undefined
 }> = (props) => {
-    const {toggleModal, setModalValue, setRequest, credentials} = props;
+    const {credentials} = props;
     const [transactions, setTransactions] = useState<TransactionType[] | null>(null);
 
     useEffect(() => {
@@ -28,21 +28,6 @@ const Transaction: React.FC<{
         }
     }, []);
 
-    const getModalValue = async (id: number | string) => {
-        if (credentials) {
-            await axios({
-                method: "get",
-                url: BASE_URL + "/transaction/" + id,
-                auth: credentials
-            }).then((res: any) => {
-                setModalValue(res.data);
-            }).catch((err) => {
-                console.log(err);
-            })
-        }
-        await toggleModal("transactionModal");
-    }
-
     return (
         <>
             <Navbar/>
@@ -51,34 +36,26 @@ const Transaction: React.FC<{
                 <h1 className="h2">Dashboard</h1>
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <div className="btn-group me-2">
-                        <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => {
-                            setRequest("add");
-                            toggleModal("transactionModal");
-                        }}>ADD NEW TRANSACTION
-                        </button>
-                        <select name={"sortByLastName"} id={"sortByLastName"}
+                        <select name={"sortByLastName"} id={"sortByLastName"} disabled={true}
                                 className="btn btn-sm btn-outline-secondary">
-                            <option value={undefined} selected={true}>Sort by lastname</option>
+                            <option value={undefined} selected={true}>Sort by date descending</option>
                             <option value={"asc"}>asc</option>
                             <option value={"desc"}>desc</option>
                         </select>
                     </div>
-                    <button disabled={true} type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle">
-                        <span data-feather="calendar"></span>
-                        This week
-                    </button>
                 </div>
             </div>
 
-            <h2>Transactions List</h2>
+            <h2>Transactions History Lists</h2>
             <div className="table-responsive">
                 <table id={"table"} className="table table-striped table-sm">
                     <thead>
                     <tr>
                         <th scope="col">Amount</th>
-                        <th scope="col">Fee</th>
+                        <th scope="col">Fee type / total / school year</th>
                         <th scope="col">Date</th>
-                        <th scope="col">Lastname</th>
+                        <th scope="col">Student Id</th>
+                        <th scope="col">Student Name</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -93,15 +70,10 @@ const Transaction: React.FC<{
                                             transaction.fee.schoolYear?.startYear + "-" + transaction.fee.schoolYear?.endYear
                                     }</td>
                                     <td>{transaction.date}</td>
-                                    <td>{transaction.fee == null ? "" : transaction.fee.student?.lastname}</td>
-                                    <td>
-                                        <button type="button" className="btn btn-sm btn-outline-secondary"
-                                                onClick={() => {
-                                                    getModalValue(transaction.id == null ? 0 : transaction.id);
-                                                    setRequest("update");
-                                                }}>SHOW/UPDATE
-                                        </button>
-                                    </td>
+                                    <td>{transaction.fee == null ? "" : transaction.fee.student?.id}</td>
+                                    <td>{
+                                        transaction.fee == null ? "" : (transaction.fee.student?.lastname + " " + transaction.fee.student?.firstname)
+                                    }</td>
                                 </tr>
                             )
                         })

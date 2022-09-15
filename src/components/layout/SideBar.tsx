@@ -31,14 +31,9 @@ const SideBar: React.FC<{}> = (props) => {
                 </h6>
                 <ul className="nav flex-column mb-2">
                     <li className="nav-item">
-                        <Link className="nav-link" to={"/group"}>
-                            Groups
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to={"school-year"}>
+                        <Link className="nav-link" to={"other"}>
                             <span data-feather="file-text"></span>
-                            School year
+                            Groups and School Year
                         </Link>
                     </li>
                 </ul>

@@ -9,6 +9,7 @@ import Fee from "../pages/Fee";
 import Transaction from "../pages/Transaction";
 import Group from "../pages/Group";
 import SchoolYear from "../pages/SchoolYear";
+import Other from "../pages/Other";
 
 const Dashboard: React.FC<{
     toggleModal: (modal: string) => void
@@ -36,6 +37,8 @@ const Dashboard: React.FC<{
                         <Route path={"/school-year"}
                                element={<SchoolYear toggleModal={toggleModal} setModalValue={setModalValue}
                                                     setRequest={setRequest}/>}></Route>
+                        <Route path={"/other"} element={<Other toggleModal={toggleModal} setModalValue={setModalValue}
+                                                               setRequest={setRequest}/>}></Route>
                         <Route path={"*"} element={<NotFound/>}></Route>
                     </Routes>
                 </main>

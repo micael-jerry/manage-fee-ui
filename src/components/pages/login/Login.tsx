@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import './login.css'
-import {BasicAuthType} from "../../../types";
 import axios, {AxiosBasicCredentials} from "axios";
 import {BASE_URL} from "../../../properties";
 
@@ -38,23 +37,23 @@ const Login: React.FC<{
     }
 
     return (
-        <div className="wrapper fadeInDown">
+        <div className="wrapper fadeInDown loginPage">
             <div id="formContent">
                 <div className="fadeIn first">
                     <img src="" id="icon" alt="HEI Icon"/>
                 </div>
 
                 <form>
-                    <input type="text" id="username" className="fadeIn second" name="login" placeholder="username"
+                    <input type="text" id="username" className="fadeIn second login" name="login" placeholder="username"
                            value={value.username == null ? "" : value.username}
                            onChange={inputChangeValue}
                     />
-                    <input type="password" id="password" className="fadeIn third" name="login" placeholder="password"
+                    <input type="password" id="password" className="fadeIn third login" name="login" placeholder="password"
                            value={value.password == null ? "" : value.password}
                            onChange={inputChangeValue}
                     />
                 </form>
-                <input type={"submit"} className="fadeIn fourth" value="Log In" onClick={log}/>
+                <input type={"submit"} className="fadeIn fourth login" value="Log In" onClick={log}/>
 
                 <div id="formFooter">
                     <p className="underlineHover">This site is reserved for HEI managers</p>

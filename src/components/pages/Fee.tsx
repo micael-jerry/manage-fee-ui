@@ -3,6 +3,7 @@ import Navbar from "../layout/Navbar";
 import axios, {AxiosBasicCredentials} from "axios";
 import {BASE_URL} from "../../properties";
 import {FeeType} from "../../types";
+import feeModal from "../layout/modal/pageModal/FeeModal";
 
 const Fee: React.FC<{
     toggleModal: (modal: string) => void,
@@ -41,6 +42,16 @@ const Fee: React.FC<{
             })
         }
         await toggleModal("feeModal");
+    }
+
+    const feeForPaying = (fee : FeeType) => {
+        setModalValue({
+            id: null, amount: 0,
+            date: null, description: null,
+            fee: fee
+        })
+        toggleModal("transactionModal");
+        setRequest("add");
     }
 
     return (
@@ -104,6 +115,13 @@ const Fee: React.FC<{
                                                     getModalValue(fee.id == null ? 0 : fee.id);
                                                     setRequest("update");
                                                 }}>SHOW/UPDATE
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" className="btn btn-sm btn-outline-secondary"
+                                                onClick={() => {
+                                                    feeForPaying(fee);
+                                                }}>PAYING
                                         </button>
                                     </td>
                                 </tr>

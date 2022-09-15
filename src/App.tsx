@@ -47,50 +47,38 @@ function App() {
     const toggleModal = (modal: string) => {
         if (modal == "studentModal") {
             setModalState({
-                studentModal: true,
-                feeModal: false,
-                transactionModal: false,
-                groupModal: false,
+                studentModal: true, feeModal: false,
+                transactionModal: false, groupModal: false,
                 schoolYearModal: false
             })
         } else if (modal == "feeModal") {
             setModalState({
-                studentModal: false,
-                feeModal: true,
-                transactionModal: false,
-                groupModal: false,
+                studentModal: false, feeModal: true,
+                transactionModal: false, groupModal: false,
                 schoolYearModal: false
             })
         } else if (modal == "transactionModal") {
             setModalState({
-                studentModal: false,
-                feeModal: false,
-                transactionModal: true,
-                groupModal: false,
+                studentModal: false, feeModal: false,
+                transactionModal: true, groupModal: false,
                 schoolYearModal: false
             })
         } else if (modal == "groupModal") {
             setModalState({
-                studentModal: false,
-                feeModal: false,
-                transactionModal: false,
-                groupModal: true,
+                studentModal: false, feeModal: false,
+                transactionModal: false, groupModal: true,
                 schoolYearModal: false
             })
         } else if (modal == "schoolYearModal") {
             setModalState({
-                studentModal: false,
-                feeModal: false,
-                transactionModal: false,
-                groupModal: false,
+                studentModal: false, feeModal: false,
+                transactionModal: false, groupModal: false,
                 schoolYearModal: true
             })
         } else if (modal == "close") {
             setModalState({
-                studentModal: false,
-                feeModal: false,
-                transactionModal: false,
-                groupModal: false,
+                studentModal: false, feeModal: false,
+                transactionModal: false, groupModal: false,
                 schoolYearModal: false
             })
             setRequest(null);

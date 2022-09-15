@@ -32,7 +32,7 @@ export type FeeType = {
 }
 
 export type SchoolYearType = {
-    id: number,
+    id: number | null,
     startYear: string,
     endYear: string
 }

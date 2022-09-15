@@ -36,22 +36,10 @@ const SideBar: React.FC<{}> = (props) => {
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="src/components/dashboard/Dashboard#">
+                        <Link className="nav-link" to={"school-year"}>
                             <span data-feather="file-text"></span>
-                            Last quarter
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="src/components/dashboard/Dashboard#">
-                            <span data-feather="file-text"></span>
-                            Social engagement
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="src/components/dashboard/Dashboard#">
-                            <span data-feather="file-text"></span>
-                            Year-end sale
-                        </a>
+                            School year
+                        </Link>
                     </li>
                 </ul>
             </div>

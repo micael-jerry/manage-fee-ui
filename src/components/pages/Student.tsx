@@ -65,22 +65,12 @@ const Student: React.FC<{
                 <h1 className="h2">Dashboard</h1>
                 <div className="btn-toolbar mb-2 mb-md-0">
                     <div className="btn-group me-2">
-                        <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => {
+                        <button type="button" className="btn btn-secondary" onClick={() => {
                             setRequest("add");
                             toggleModal("studentModal");
                         }}>ADD NEW STUDENT
                         </button>
-                        <select name={"sortByLastName"} id={"sortByLastName"}
-                                className="btn btn-sm btn-outline-secondary">
-                            <option value={undefined} selected={true}>Sort by lastname</option>
-                            <option value={"asc"}>asc</option>
-                            <option value={"desc"}>desc</option>
-                        </select>
                     </div>
-                    <button disabled={true} type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle">
-                        <span data-feather="calendar"></span>
-                        This week
-                    </button>
                 </div>
             </div>
 
